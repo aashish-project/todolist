@@ -31,7 +31,7 @@ urlpatterns = [
     
     path('<str:playlist>/',combined_function,name='todo'),
     path('<str:playlist>/delete/<uuid:uuid>',delete,name='delete-task'),
-    path('<str:playlist>/star/<uuid:uuid>',star,name='star-task'),
+    path('<str:playlist>/star/<uuid:uuid>', star, name='star-task'),
     path('<str:playlist>/finish_task/<uuid:uuid>',finish_task,name='finish-task'),
     path('<str:playlist>/create-task',combined_function,name='create-task'),
 ]

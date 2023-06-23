@@ -3,32 +3,123 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework import serializers,viewsets,status
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 
 from .serializer import *
 from todo.models import *
 
-
-
 class MydayViewSet(viewsets.ModelViewSet):
     queryset = MyDayClass.objects.all()
     serializer_class = MyDaySerializer
+    def create(self, request, *args, **kwargs):
+        if request.user:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
 
+            playlist_data = serializer.validated_data.get('playlist')
+            finished_data = serializer.validated_data.get('finished')
+            user=serializer.validated_data.get('user')
+            # Create the Playlist object
+            playlist = None
+            if playlist_data:
+                playlist = TodoClass.objects.create(**playlist_data)
+            # Create the Finished object
+            finished = None
+            if finished_data:
+                finished = FinishTimeClass.objects.create(**finished_data)
+
+            # Create the PlayListClass object
+            play_list = MyDayClass.objects.create(playlist=playlist,user=user)
+
+            serializer.instance = play_list
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 class ImportantViewSet(viewsets.ModelViewSet):
     queryset = ImportantClass.objects.all()
     serializer_class = ImportantSerializer
 
+    def create(self, request, *args, **kwargs):
+        if request.user:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+
+            playlist_data = serializer.validated_data.get('playlist')
+            finished_data = serializer.validated_data.get('finished')
+            user=serializer.validated_data.get('user')
+            # Create the Playlist object
+            playlist = None
+            if playlist_data:
+                playlist = TodoClass.objects.create(**playlist_data)
+            # Create the Finished object
+            finished = None
+            if finished_data:
+                finished = FinishTimeClass.objects.create(**finished_data)
+
+            # Create the PlayListClass object
+            play_list = ImportantClass.objects.create(playlist=playlist,user=user)
+
+            serializer.instance = play_list
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 class PlanViewSet(viewsets.ModelViewSet):
     queryset = PlanClass.objects.all()
     serializer_class = PlanSerializer
 
+    def create(self, request, *args, **kwargs):
+        if request.user:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+
+            playlist_data = serializer.validated_data.get('playlist')
+            finished_data = serializer.validated_data.get('finished')
+            user=serializer.validated_data.get('user')
+            # Create the Playlist object
+            playlist = None
+            if playlist_data:
+                playlist = TodoClass.objects.create(**playlist_data)
+            # Create the Finished object
+            finished = None
+            if finished_data:
+                finished = FinishTimeClass.objects.create(**finished_data)
+
+            # Create the PlayListClass object
+            play_list = PlanClass.objects.create(playlist=playlist,user=user,finished=finished)
+
+            serializer.instance = play_list
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 class PlayListViewSet(viewsets.ModelViewSet):
     queryset = PlayListClass.objects.all()
     serializer_class = PlaylistSerializer
 
+    def create(self, request, *args, **kwargs):
+        if request.user:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+
+            playlist_data = serializer.validated_data.get('playlist')
+            finished_data = serializer.validated_data.get('finished')
+            user=serializer.validated_data.get('user')
+            # Create the Playlist object
+            playlist = None
+            if playlist_data:
+                playlist = TodoClass.objects.create(**playlist_data)
+            # Create the Finished object
+            finished = None
+            if finished_data:
+                finished = FinishTimeClass.objects.create(**finished_data)
+
+            # Create the PlayListClass object
+            play_list = PlayListClass.objects.create(playlist=playlist,user=user,finished=finished)
+
+            serializer.instance = play_list
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 @api_view(['GET'])
 def Home(request):

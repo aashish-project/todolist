@@ -75,11 +75,12 @@ def combined_function(request, playlist):
         if form2 is not None and form2.is_valid():
             finish = form2.save()
         if ctr == PlayListClass:
-            ctr, _ = PlayListClass.objects.get_or_create(title=playlist,user=user, playlist=todo, finished=finish)
+            ctr = PlayListClass.objects.create(title=playlist,user=user, playlist=todo, finished=finish)
+            print(ctr.id)
         elif time:
-            ctr, _ = ctr.objects.get_or_create(playlist=todo, finished=finish,user=user)
+            ctr = ctr.objects.create(playlist=todo, finished=finish,user=user)
         else:
-            ctr, _ = ctr.objects.get_or_create(playlist=todo,user=user)
+            ctr = ctr.objects.create(playlist=todo,user=user)
         return redirect('todo', playlist=playlist)
     else:
         form1 = TodoForm()

@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if request.path == "/accounts/login/" %}<title>Login</title> {% elif request.path == "/accounts/register/" %}<title>Register</title>{% endif %}
+    <link rel="stylesheet" href="{% static '/css/login.css' %}">
+</head>
+<body>
+    {% if request.path == "/accounts/login/" %}
+        {% block login %}{% endblock login %}
+    {% elif request.path == "/accounts/register/" %}
+        {% block registration %}{% endblock registration %}
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,103 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href={% static '/css/style.css' %}>
+    <style>
+        body{
+            background-image: linear-gradient(to bottom,#41ff00,#00ff1dba,#00ffbbcc);
+            background-repeat: round;
+            position: relative;
+            z-index: -1;
+            backdrop-filter: drop-shadow(2px 4px 6px black) contrast(1.095) blur(7px);
+            overflow:hidden;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="box">
+
+        <div class="container1">
+            
+            <nav>
+                <div class="items">
+                    <div class="store">
+                        <ul>
+                            <li 
+                            {% if request.path == '/myday/' %}
+                            style="border-left:8px solid #02d002;"
+                    {% else %}
+                    style="border-left:8px solid transparent ;"
+                    {% endif %} 
+                    >
+                    <span class="logo">🏠</span>
+                    <a href="{% url 'todo' 'myday' %}">myday</a>
+                </li>
+                
+                <li
+                {% if request.path == '/important/' %}
+                style="border-left:8px solid #02d099;"
+                {% else %}
+                style="border-left:8px solid transparent;"
+                {% endif %} 
+                >
+                <span class="logo">⚒️</span>
+                <a href="{% url 'todo' 'important' %}">important</a>
+            </li>
+            
+            <li
+            {% if request.path == '/plan/' %}
+            style="border-left:8px solid #d04e02;"
+            {% else %}
+            style="border-left:8px solid transparent;"
+            {% endif %} 
+            >
+            <span class="logo">💭</span>
+            <a href="{% url 'todo' 'plan' %}"plan>plan</a>
+        </li>
+        
+        <hr>
+        {% for heading in headings %}
+        <li
+        {% if  heading in request.path %}
+        style="border-left:8px solid #a002d0;"
+        {% else %}
+        style="border-left:8px solid transparent;"
+        {% endif %} 
+        >
+        
+        <span class="logo"><i class="fa-solid fa-{{heading}} fa-bell {% if heading == path %}fa-shake{% endif %} fa-1x"></i></span>
+        <a href="{% url 'todo' playlist=heading %}">{{ heading }}</a>
+    </li>
+    {% endfor %}
+</ul>
+</div>
+<div class="create-new-playlist">
+                    {% include 'create-playlist.html' %}
+                </div>
+            </div>
+        </nav>
+    </div>
+        
+    <div class="container2">
+        <div class="user">
+            <div class="username">hi {{request.user.username}}</div>
+            <button>
+                <a href="{% url 'logout' %}">Logout</a>
+            </button>
+        </div>
+        {% include 'fullpage.html' %}
+    </div>
+</div>
+</body>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="https://kit.fontawesome.com/4b3d809112.js" crossorigin="anonymous"></script>
+</html>

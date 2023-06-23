@@ -1,0 +1,44 @@
+{% extends 'auth.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/login.css' %}">
+{% block login %}
+    <div class="container">
+        <h2>Login</h2>
+        <form method="post" action="{% url 'login' %}?next=/myday/">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Username:</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="id_password">Password:</label>
+                {{ form.password }}
+            </div>
+            <div class="register"><a href="{% url 'register' %}">Register</a></div class="register">
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+          </div>
+          {% endblock login %}
+          
+          {% block registration %}
+          <div class="container">
+            <h2>Registration</h2>
+            <form method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="id_username">Username:</label>
+                {{ form.username }}
+              </div>
+              <div class="form-group">
+                <label for="id_password1">Password:</label>
+                {{ form.password1 }}
+              </div>
+              <div class="form-group">
+                <label for="id_password2">Confirm Password:</label>
+                {{ form.password2 }}
+              </div>
+          <div class="login"><a href="{% url 'login' %}">Login</a></div class="register">
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+  </div>
+{% endblock registration %}

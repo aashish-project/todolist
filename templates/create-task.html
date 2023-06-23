@@ -1,0 +1,25 @@
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form1">
+            {% for form in form1 %}
+            <div class="field">
+                <div class="label">{{ form.label }}</div>
+                <div class="input">{{ form }}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="form2">
+                {% if form2 %}
+                {% for form in form2 %}
+                <div class="field">
+                    <div class="label">{{ form.label }}</div>
+                    <div class="input">{{ form }}</div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <button type="submit">Submit</button>
+    </form>
+</div>

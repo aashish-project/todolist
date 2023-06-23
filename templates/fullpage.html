@@ -1,0 +1,91 @@
+{% load static %}
+
+<div class="card">
+
+    <div class="lookup">
+        <div class="heading">
+            <h2>
+                {{ playlist }}
+            </h2>
+          </div>
+          <div class="form">
+            {% include 'create-task.html' %}
+        </div>
+    {% if list == True %}
+        {% for task , time in tasks.items %}
+        
+        <div class="bars">
+            <div class="finished">
+                {% if task.finished == True %}
+                <a href="{% url 'finish-task' playlist task.id %}"><img src="{% static '/images/sleep.png' %}" alt=""></a>
+                {% elif task.finished == False %}
+                <a href="{% url 'finish-task' playlist task.id %}"><img src="{% static '/images/pending-tasks.png' %}" alt=""></a>
+                {% endif %}
+            </div>
+
+            <div class="title">
+                <i class="fa-solid fa-{{task.title}} fa-scroll fa-bounce fa-1x"></i>
+                {{task.title}}
+            </div>
+            <div class="icon">
+
+                <div class="star">
+                    {% if task.star %}
+                    <span class="logo">
+                    <a href="{% url 'star-task' playlist task.id %}">
+                        <img src="{% static '/images/star (1).png' %}" alt="">
+                    </a>
+                </span>
+                {% else %}
+                <a href="{% url 'star-task' playlist task.id %}">
+                    <img src="{% static '/images/star (2).png' %}" alt="Logo" style="width: 33px;margin-right: 10px;">
+                </a>
+                {% endif %}
+            </div>
+            <div class="delete">
+                <a href="{% url 'delete-task' playlist task.id %}"><img src="{% static '/images/bin.png' %}" alt=""></a>
+            </div>
+        </div>
+            
+            <div class="slider-card">
+                <div class="header">
+                    <span class="finished">
+                        {% if task.finished %}
+                        <a href="{% url 'finish-task' playlist task.id %}"><img src="{% static '/images/sleep.png' %}" alt=""></a>
+                        {% else %}
+                        <a href="{% url 'finish-task' playlist task.id %}"><img src="{% static '/images/pending-tasks.png' %}" alt=""></a>
+                        {% endif %}
+                    </span>
+                    <div class="title">
+                        {{task.title}}
+                    </div>
+                    <span class="star">
+                        {% if task.star %}<a href="{% url 'star-task' playlist task.id %}">⭐</a> {% else %} <a href="{% url 'star-task' playlist task.id %}"><img src="{% static '/images/star-empty.png' %}" alt="" srcset=""></a>{% endif %}
+                    </span>
+                </div>
+                <div class="description">
+                    {{task.description}}
+                </div>
+                <div class="create-time">
+                {{task.create_time}}
+            </div>
+            
+            
+            
+            {% if time %}
+            <div class="finish_time">
+                {{time.finish_time}}
+            </div>
+            {% endif %}
+            
+        </div>
+
+    </div>  
+    {% endfor %}
+{% else %}
+
+{% endif %}
+    
+    
+</div>
+<div>
